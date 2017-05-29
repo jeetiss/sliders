@@ -38,34 +38,32 @@ const rebalance = (array, index) => {
     .sort(comporator(over))
 
   let i = 0
-  let count = 1
-  let sumOfMin = sortedElementsForChange[i].value
-  let testValue = (sumOfMin + over) / count
+  let count = 0
+  let sumOfMin = 0
+  let testValue
 
-  while (
-    (i + 1 < sortedElementsForChange.length &&
-      (testValue - sortedElementsForChange[i + 1].value) * Math.sign(over) >
-        0) ||
-    testValue < 0
-  ) {
-    ++i
+  console.log(sortedElementsForChange)
+
+  do {
     ++count
-    sumOfMin += sortedElementsForChange[i].value
+    sumOfMin += sortedElementsForChange[i++].value
     testValue = (sumOfMin + over) / count
-  }
+  } while (i < sortedElementsForChange.length &&
+    ((testValue - sortedElementsForChange[i].value) * Math.sign(over) > 0 ||
+      testValue < 0))
 
-  for (let i = 0, len = count; i < len; ++i) {
+  for (let i = 0; i < count; ++i) {
     sortedElementsForChange[i] = {
       value: format(testValue),
       index: sortedElementsForChange[i].index
     }
   }
 
-  const rebalanceElements = sortedElementsForChange
+  const rebalancedElements = sortedElementsForChange
     .sort((a, b) => a.index - b.index)
     .map(({ value }) => value)
 
-  rebalanceElements.splice(index, 0, value)
+  rebalancedElements.splice(index, 0, value)
 
-  return rebalanceElements
+  return rebalancedElements
 }
