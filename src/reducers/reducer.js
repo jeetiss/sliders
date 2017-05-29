@@ -42,8 +42,6 @@ const rebalance = (array, index) => {
   let sumOfMin = 0
   let testValue
 
-  console.log(sortedElementsForChange)
-
   do {
     ++count
     sumOfMin += sortedElementsForChange[i++].value
