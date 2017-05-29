@@ -20,7 +20,6 @@ export function sliders (state, action) {
 
 const rebalance = (array, index) => {
   if (array.length === 1) return array.slice()
-  const step = 0.01
   const value = array[index]
 
   array.splice(index, 1)
@@ -46,15 +45,14 @@ const rebalance = (array, index) => {
   do {
     ++count
     sumOfMin += sortedElementsForChange[i++].value
-    testValue = format((sumOfMin + over) / count)
+    testValue = (sumOfMin + over) / count
   } while (i < sortedElementsForChange.length &&
-    Math.abs(testValue * count - sumOfMin - step) < 0e-6 &&
     ((testValue - sortedElementsForChange[i].value) * Math.sign(over) > 0 ||
       testValue < 0))
 
   for (let i = 0; i < count; ++i) {
     sortedElementsForChange[i] = {
-      value: testValue,
+      value: format(testValue),
       index: sortedElementsForChange[i].index
     }
   }
